@@ -13,6 +13,32 @@ def subprocess_with_timeout(command, timeout, working_directory=None, env=None):
             process.wait()
     return False
 
+def subprocess_with_timeout1(command, timeout, working_directory, env):
+    import subprocess
+    import pyautogui
+    import time
+    from module.automation.screenshot import Screenshot
+    process = None
+    try:
+        process = subprocess.Popen(command, cwd=working_directory, env=env)
+        time.sleep(15)
+        window = Screenshot.get_window("March7th Assistant.exe")  #测试用"python.exe"；正式用"March7th Assistant.exe"
+        if window:
+            window.activate()
+            time.sleep(2)
+            for _ in range(3):
+                pyautogui.press('enter')
+                time.sleep(1)
+        else:
+            print("窗口未找到")
+        process.communicate(timeout=timeout)
+        if process.returncode == 0:
+            return True
+    except subprocess.TimeoutExpired:
+        if process is not None:
+            process.terminate()
+            process.wait()
+    return False
 
 def subprocess_with_stdout(command):
     import subprocess
