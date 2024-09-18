@@ -1,8 +1,8 @@
 name: Update latest.json
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 16 * * *"
+#  schedule:
+#    - cron: "0 16 * * *"
 permissions:
   contents: write
 jobs:
